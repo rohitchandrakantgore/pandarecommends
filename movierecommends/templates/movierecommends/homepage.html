@@ -1,0 +1,49 @@
+{% extends 'movierecommends/base.html'%}
+{% load static %}
+{% block title %}
+    Movie Recommend
+{% endblock %}
+
+{% block navbar %}
+<div class="container-fluid">
+    <a class="navbar-brand" href="#">
+        <img src="{% static 'images/panda.jfif' %}" alt="" width="40" height="34" >
+        <span class="navbar-right">
+            <i class="bi bi-film"> Movie Recommender</i>
+        </span>
+
+
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-md-6 g-3">
+    {% for data in movie_data %}
+    <div class="col">
+        <div class="card border-light">
+            <div class="card-header">
+                <p>
+                    {% if data.streamOn == "Watch on Prime Video" %}
+                        <a href="https://www.primevideo.com/"><img src="{% static 'images/prime.png'%}" width="70px" ></a>
+                    {% elif data.streamOn == "Watch on Netflix" %}
+                        <a href="https://www.netflix.com/in/"><img src="{% static 'images/netflix.jpg'%}" width="70px"></a>
+                    {%elif data.streamOn == "Watch on Hotstar" %}
+                        <a href="https://www.hotstar.com/in/search?q={{data.movie_name}}"><img src="{% static 'images/hotstar.png'%}"  width="70px"></a>
+                        {%elif data.streamOn == "Watch on JioCinema" %}
+                        <a href="https://www.jiocinema.com/search/{{data.movie_name}}"><img src="{% static 'images/jio.png'%}"  width="70px"></a>
+                        {% else %}
+                        <a class="btn" href="https://www.google.com/search?q={{data.movie_name}}"><img src="{% static 'images/google.png' %}" width="70px" height="20px" ></a>
+                        {%endif%}
+                    </p>
+            </div>
+                <img src="{{data.poster}}" class="card-img" alt="..." style="width=100%">
+                <div class="card-footer">
+                    {{data.movie_name}} ({{data.year}})
+                </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
